@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addresses",
+  "info": {
+    "singularName": "address",
+    "pluralName": "addresses",
+    "displayName": "Address",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "street": {
+      "type": "string",
+      "required": true
+    },
+    "neighborhood": {
+      "type": "string",
+      "required": true
+    },
+    "numberHouse": {
+      "required": true,
+      "type": "integer"
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "state": {
+      "type": "string",
+      "required": true
+    },
+    "cep": {
+      "type": "string",
+      "required": true
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "address"
+    }
+  }
+}

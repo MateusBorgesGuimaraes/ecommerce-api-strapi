@@ -1,0 +1,16 @@
+version: "3.1"
+
+services:
+  postgres_strapi_ecommerce:
+    container_name: postgres_strapi_ecommerce
+    hostname: postgres_strapi_ecommerce
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: strapi_ecommerce_1
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - /c/postgress/postgres-ecommerce/strapi_ecommerce:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432

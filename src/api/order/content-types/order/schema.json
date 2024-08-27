@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orders",
+  "info": {
+    "singularName": "order",
+    "pluralName": "orders",
+    "displayName": "Order",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "totalAmount": {
+      "type": "float",
+      "required": false
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "sent",
+        "deliver"
+      ],
+      "default": "pending"
+    },
+    "paymentMethod": {
+      "type": "enumeration",
+      "enum": [
+        "creditCard",
+        "pix",
+        "paypal",
+        "money"
+      ],
+      "default": "creditCard",
+      "required": true
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "order"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "orders"
+    }
+  }
+}

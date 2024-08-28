@@ -1004,6 +1004,7 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'oneToOne',
       'api::review.review'
     >;
+    isFeatured: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

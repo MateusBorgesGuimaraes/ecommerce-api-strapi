@@ -81,6 +81,10 @@
       "relation": "oneToOne",
       "target": "api::review.review",
       "mappedBy": "product"
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

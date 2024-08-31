@@ -70,12 +70,6 @@
       "target": "api::tag.tag",
       "inversedBy": "products"
     },
-    "sub_categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::sub-categorie.sub-categorie",
-      "inversedBy": "products"
-    },
     "review": {
       "type": "relation",
       "relation": "oneToOne",

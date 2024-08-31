@@ -994,11 +994,6 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'manyToMany',
       'api::tag.tag'
     >;
-    sub_categories: Attribute.Relation<
-      'api::product.product',
-      'manyToMany',
-      'api::sub-categorie.sub-categorie'
-    >;
     review: Attribute.Relation<
       'api::product.product',
       'oneToOne',
@@ -1067,42 +1062,6 @@ export interface ApiReviewReview extends Schema.CollectionType {
   };
 }
 
-export interface ApiSubCategorieSubCategorie extends Schema.CollectionType {
-  collectionName: 'sub_categories';
-  info: {
-    singularName: 'sub-categorie';
-    pluralName: 'sub-categories';
-    displayName: 'SubCategorie';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required & Attribute.Unique;
-    description: Attribute.Text & Attribute.Required;
-    products: Attribute.Relation<
-      'api::sub-categorie.sub-categorie',
-      'manyToMany',
-      'api::product.product'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::sub-categorie.sub-categorie',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::sub-categorie.sub-categorie',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiTagTag extends Schema.CollectionType {
   collectionName: 'tags';
   info: {
@@ -1154,7 +1113,6 @@ declare module '@strapi/types' {
       'api::order.order': ApiOrderOrder;
       'api::product.product': ApiProductProduct;
       'api::review.review': ApiReviewReview;
-      'api::sub-categorie.sub-categorie': ApiSubCategorieSubCategorie;
       'api::tag.tag': ApiTagTag;
     }
   }

@@ -10,5 +10,14 @@ export default {
         middlewares: [],
       },
     },
+    {
+      method: "GET",
+      path: "/products/related/:id",
+      handler: "product.relatedProducts", // Esse é o handler que criamos no controlador
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };

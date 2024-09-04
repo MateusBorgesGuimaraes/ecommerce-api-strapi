@@ -82,16 +82,89 @@ module.exports = createCoreController("api::product.product", ({ strapi }) => ({
       }
     );
 
+    const formatImageData = (image) => {
+      if (!image || !image.formats) return null;
+      return Object.keys(image.formats).reduce((acc, format) => {
+        acc[format] = {
+          url: image.formats[format].url,
+          width: image.formats[format].width,
+          height: image.formats[format].height,
+        };
+        return acc;
+      }, {});
+    };
+
+    const formatProductData = (product) => ({
+      ...product,
+      mainImage: formatImageData(product.mainImage),
+      secondImage: formatImageData(product.secondImage),
+      thirdImage: formatImageData(product.thirdImage),
+    });
+
+    const formattedLatestProducts = latestProducts.map(formatProductData);
+    const formattedFeaturedProducts = featuredProducts.map(formatProductData);
+
     const data = {
-      latestProducts,
-      featuredProducts,
+      latestProducts: formattedLatestProducts,
+      featuredProducts: formattedFeaturedProducts,
     };
 
     return ctx.send(data);
   },
+
+  async relatedProducts(ctx) {
+    const { id } = ctx.params;
+    console.log("id aqui", id);
+
+    const product = await strapi.entityService.findOne(
+      "api::product.product",
+      id,
+      {
+        populate: ["categorie"],
+      }
+    );
+
+    if (!product) {
+      return ctx.notFound("Produto não encontrado");
+    }
+
+    const relatedProducts = await strapi.entityService.findMany(
+      "api::product.product",
+      {
+        where: {
+          categorie: product.categorie.id,
+          id: { $ne: id },
+        },
+        limit: 4,
+        populate: ["mainImage", "secondImage", "thirdImage"],
+      }
+    );
+
+    const formatImageData = (image) => {
+      if (!image || !image.formats) return null;
+      return Object.keys(image.formats).reduce((acc, format) => {
+        acc[format] = {
+          url: image.formats[format].url,
+          width: image.formats[format].width,
+          height: image.formats[format].height,
+        };
+        return acc;
+      }, {});
+    };
+
+    const formatProductData = (product) => ({
+      ...product,
+      mainImage: formatImageData(product.mainImage),
+      secondImage: formatImageData(product.secondImage),
+      thirdImage: formatImageData(product.thirdImage),
+    });
+
+    const formattedRelatedProducts = relatedProducts.map(formatProductData);
+
+    return ctx.send(formattedRelatedProducts);
+  },
 }));
 
-// Função para filtrar os dados da imagem
 const filterImageData = (image) => {
   if (!image) return null;
   const { url, formats } = image.data.attributes;

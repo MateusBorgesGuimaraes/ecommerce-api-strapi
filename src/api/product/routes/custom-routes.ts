@@ -9,5 +9,14 @@ export default {
         middlewares: [],
       },
     },
+    {
+      method: "GET",
+      path: "/products/:id/related",
+      handler: "product.relatedProducts",
+      config: {
+        policies: [],
+        middlewares: [],
+      },
+    },
   ],
 };

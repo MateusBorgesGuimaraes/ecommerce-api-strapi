@@ -723,21 +723,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    cart: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToOne',
-      'api::cart.cart'
-    >;
-    orders: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToMany',
-      'api::order.order'
-    >;
-    order: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToOne',
-      'api::order.order'
-    >;
     review: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToOne',
@@ -858,29 +843,6 @@ export interface ApiAddressAddress extends Schema.CollectionType {
   };
 }
 
-export interface ApiCartCart extends Schema.CollectionType {
-  collectionName: 'carts';
-  info: {
-    singularName: 'cart';
-    pluralName: 'carts';
-    displayName: 'Cart';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    status: Attribute.Enumeration<['open', 'checkout']>;
-    total: Attribute.Float;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::cart.cart', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
 export interface ApiCategorieCategorie extends Schema.CollectionType {
   collectionName: 'categories';
   info: {
@@ -912,54 +874,6 @@ export interface ApiCategorieCategorie extends Schema.CollectionType {
   };
 }
 
-export interface ApiOrderOrder extends Schema.CollectionType {
-  collectionName: 'orders';
-  info: {
-    singularName: 'order';
-    pluralName: 'orders';
-    displayName: 'Order';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    totalAmount: Attribute.Float;
-    status: Attribute.Enumeration<['pending', 'sent', 'deliver']> &
-      Attribute.DefaultTo<'pending'>;
-    paymentMethod: Attribute.Enumeration<
-      ['creditCard', 'pix', 'paypal', 'money']
-    > &
-      Attribute.Required &
-      Attribute.DefaultTo<'creditCard'>;
-    users_permissions_user: Attribute.Relation<
-      'api::order.order',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    product: Attribute.Relation<
-      'api::order.order',
-      'manyToOne',
-      'api::product.product'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::order.order',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::order.order',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiProductProduct extends Schema.CollectionType {
   collectionName: 'products';
   info: {
@@ -983,11 +897,6 @@ export interface ApiProductProduct extends Schema.CollectionType {
       'api::product.product',
       'oneToOne',
       'api::categorie.categorie'
-    >;
-    orders: Attribute.Relation<
-      'api::product.product',
-      'oneToMany',
-      'api::order.order'
     >;
     tags: Attribute.Relation<
       'api::product.product',
@@ -1108,9 +1017,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
       'api::address.address': ApiAddressAddress;
-      'api::cart.cart': ApiCartCart;
       'api::categorie.categorie': ApiCategorieCategorie;
-      'api::order.order': ApiOrderOrder;
       'api::product.product': ApiProductProduct;
       'api::review.review': ApiReviewReview;
       'api::tag.tag': ApiTagTag;

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "categorie",
     "pluralName": "categories",
-    "displayName": "categorie"
+    "displayName": "categorie",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -19,6 +20,11 @@
     "description": {
       "type": "text",
       "required": true
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product"
     }
   }
 }

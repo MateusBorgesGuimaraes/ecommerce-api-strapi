@@ -849,6 +849,7 @@ export interface ApiCategorieCategorie extends Schema.CollectionType {
     singularName: 'categorie';
     pluralName: 'categories';
     displayName: 'categorie';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -856,6 +857,11 @@ export interface ApiCategorieCategorie extends Schema.CollectionType {
   attributes: {
     name: Attribute.String & Attribute.Required & Attribute.Unique;
     description: Attribute.Text & Attribute.Required;
+    products: Attribute.Relation<
+      'api::categorie.categorie',
+      'oneToMany',
+      'api::product.product'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
